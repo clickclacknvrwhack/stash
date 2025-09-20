@@ -335,3 +335,130 @@ function generateSummary(stockData, newsData) {
     `This assessment is based on ${newsData.length} recent news articles and market data.`
   );
 }
+// public/api/analyze.js - BACKEND serverless function
+export default async function handler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { symbol } = req.query;
+  
+  if (!symbol) {
+    return res.status(400).json({ error: 'Stock symbol is required' });
+  }
+
+  try {
+    console.log(`🔍 Backend analyzing: ${symbol}`);
+    
+    // Generate mock data (replace with real APIs later)
+    const mockData = generateMockData(symbol.toUpperCase());
+    
+    // Return JSON response
+    res.json(mockData);
+    
+  } catch (error) {
+    console.error('❌ Backend error:', error);
+    res.status(500).json({ 
+      error: 'Failed to analyze stock',
+      symbol: symbol,
+      message: error.message
+    });
+  }
+}
+
+// Generate mock data for testing
+function generateMockData(symbol) {
+  const mockStocks = {
+    'AAPL': {
+      name: 'Apple Inc.',
+      price: 175.25,
+      marketCap: 2800000000000,
+      sector: 'Technology',
+      industry: 'Consumer Electronics'
+    },
+    'TSLA': {
+      name: 'Tesla Inc.',
+      price: 248.50,
+      marketCap: 780000000000,
+      sector: 'Consumer Discretionary',
+      industry: 'Auto Manufacturers'
+    },
+    'GOOGL': {
+      name: 'Alphabet Inc.',
+      price: 138.75,
+      marketCap: 1700000000000,
+      sector: 'Technology',
+      industry: 'Internet Content & Information'
+    },
+    'MSFT': {
+      name: 'Microsoft Corporation',
+      price: 415.20,
+      marketCap: 3100000000000,
+      sector: 'Technology',
+      industry: 'Software Infrastructure'
+    },
+    'NVDA': {
+      name: 'NVIDIA Corporation',
+      price: 465.85,
+      marketCap: 1150000000000,
+      sector: 'Technology',
+      industry: 'Semiconductors'
+    },
+    'AMZN': {
+      name: 'Amazon.com Inc.',
+      price: 155.30,
+      marketCap: 1600000000000,
+      sector: 'Consumer Discretionary',
+      industry: 'Internet Retail'
+    }
+  };
+
+  const stockData = mockStocks[symbol] || {
+    name: `${symbol} Corporation`,
+    price: Math.random() * 200 + 50,
+    marketCap: Math.random() * 1000000000000 + 50000000000,
+    sector: 'Unknown',
+    industry: 'Unknown'
+  };
+
+  const newsData = [
+    {
+      title: `${symbol} reports strong quarterly earnings`,
+      source: 'Financial News',
+      sentiment: 'Positive',
+      publishedDate: '2025-09-18'
+    },
+    {
+      title: `Analysts upgrade ${symbol} price target`,
+      source: 'Market Watch',
+      sentiment: 'Positive', 
+      publishedDate: '2025-09-17'
+    },
+    {
+      title: `${symbol} announces strategic partnership`,
+      source: 'Reuters',
+      sentiment: 'Positive',
+      publishedDate: '2025-09-16'
+    }
+  ];
+
+  return {
+    symbol: symbol,
+    name: stockData.name,
+    price: Number(stockData.price).toFixed(2),
+    marketCap: stockData.marketCap,
+    sector: stockData.sector,
+    industry: stockData.industry,
+    description: `${stockData.name} is a leading company in the ${stockData.sector} sector. This is mock data for MVP demonstration.`,
+    sentimentScore: 'Positive (78%)',
+    news: newsData,
+    summary: `${symbol} shows positive market sentiment based on recent analysis. Trading at $${Number(stockData.price).toFixed(2)} with strong fundamentals in the ${stockData.sector} sector.`,
+    timestamp: new Date().toISOString(),
+    dataSource: 'Mock Data (MVP Demo)'
+  };
+}
