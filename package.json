@@ -1,6 +1,10 @@
 {
   "name": "narrative-intelligence-engine",
   "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vercel dev",
     "build": "echo 'No build step needed'",
