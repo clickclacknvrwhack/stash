@@ -50,7 +50,15 @@ const App = {
       UI.showLoadingMessage();
 
       const data = await API.analyzeStock(symbol);
+
+      // Add this line - fetch chart data
+      const chartData = await StockChart.fetchChartData(symbol);
+
       UI.renderResults(data);
+
+      // Add this line - create the chart
+      StockChart.createChart(chartData, symbol);
+
       this.addToHistory(symbol);
     } catch (error) {
       console.error("❌ Analysis failed:", error);

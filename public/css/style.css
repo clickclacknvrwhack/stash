@@ -78,3 +78,85 @@ body {
   padding: 2rem;
   color: #666;
 }
+
+/* Chart-specific styles - add to your css/styles.css */
+
+.chart-section {
+  background: #f8f9ff;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.chart-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chart-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.chart-btn:hover {
+  background: #f0f2ff;
+}
+
+.chart-btn.active {
+  background: #667eea;
+  color: white;
+}
+
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+/* Mobile responsiveness for charts */
+@media (max-width: 768px) {
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-container {
+    height: 300px;
+    padding: 0.5rem;
+  }
+
+  .chart-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .chart-btn {
+    flex: 1;
+    text-align: center;
+  }
+}

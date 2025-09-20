@@ -74,7 +74,8 @@ const UI = {
                     }</div>
                 </div>
             </div>
-
+            
+            ${StockChart.renderChartSection(data.symbol)}
             ${this.renderCompanyInfo(data)}
             ${this.renderNews(data)}
             ${this.renderPoliticalTrading(data)}
